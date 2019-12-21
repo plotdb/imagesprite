@@ -59,11 +59,11 @@ build-svg = (opt = {}) ->
       """
       bkimg = if base and name => "background-image: url(#{path.join(base, name + '.svg')});" else ""
       css = [
-        """.svg-sprite {
+        """.#name {
           display: inline-block;
           position: relative;
         }
-        .svg-sprite:before {
+        .#name:before {
           content: " ";
           width: 100%;
           display: block;
@@ -77,10 +77,10 @@ build-svg = (opt = {}) ->
         bkpos-x = "#{(idim.x / sdim.width) * (sdim.width / idim.width) / ((sdim.width / idim.width) - 1) * 100}%"
         bkpos-y = "#{(idim.y / sdim.height) * (sdim.height / idim.height) / ((sdim.height / idim.height) - 1) * 100}%"
         css.push """
-        .svg-sprite[data-name="#k"] {
+        .#name[data-name="#k"] {
           width: #{idim.width}px;
         }
-        .svg-sprite[data-name="#k"]:before {
+        .#name[data-name="#k"]:before {
           background-size: #bksize;
           background-position: #bkpos-x #bkpos-y;
           padding-top: #padding-top

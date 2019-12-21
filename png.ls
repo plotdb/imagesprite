@@ -19,11 +19,11 @@ files = imagesprite.files opt.root, {rule: opt.rule}
 root = (files.0 or {}).root or '.'
 
 css = [
-  """.sprite {
+  """.#{opt.name} {
     display: inline-block;
     position: relative;
   }
-  .sprite:before {
+  .#{opt.name}:before {
     content: " ";
     width: 100%;
     display: block;
@@ -47,10 +47,10 @@ spritesmith.run src: files, (err, ret) ->
     bkpos-y = "#{(idim.y / sdim.height) * (sdim.height / idim.height) / ((sdim.height / idim.height) - 1) * 100}%"
 
     css.push """
-    .sprite[data-name="#k"] {
+    .#{opt.name}[data-name="#k"] {
       width: #{idim.width}px;
     }
-    .sprite[data-name="#k"]:before {
+    .#{opt.name}[data-name="#k"]:before {
       background-size: #bksize;
       background-position: #bkpos-x #bkpos-y;
       padding-top: #padding-top
