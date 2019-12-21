@@ -1,7 +1,8 @@
-require! <[fs ./imagesprite spritesmith path]>
+require! <[fs fs-extra ./imagesprite spritesmith path imagemin imagemin-pngquant]>
+pngmin = imagemin-pngquant speed: 1, strip: true, quality: [0.7, 0.8]
 
 if !process.argv.2 =>
-  console.log "usage: imagesprite-png srcdir [outdir] [name] [base]"
+  console.log "usage: imagesprite-png srcdir [outdir] [name] [base] [rule]"
   process.exit -1
 
 opt = {
@@ -9,13 +10,12 @@ opt = {
   outdir: process.argv.3 or '.'
   name: process.argv.4 or 'png-sprite'
   base: process.argv.5 or '/'
+  rule: if process.argv.6 => new RegExp(process.argv.6) else \/.png$/
 }
 
-files = imagesprite.files opt.root, {rule: /\.png$/}
-  .map ->
-    console.log ">", it
-    path.join(it.root, it.path)
-console.log files
+files = imagesprite.files opt.root, {rule: opt.rule}
+  .map -> path.join(it.root, it.path)
+
 root = (files.0 or {}).root or '.'
 
 css = [
@@ -33,7 +33,9 @@ css = [
 ]
 
 spritesmith.run src: files, (err, ret) ->
+  fs-extra.ensure-dir-sync opt.outdir
   fs.write-file-sync path.join(opt.outdir, opt.name + '.png'), ret.image
+
   sdim = ret.properties
   [[k,v] for k,v of ret.coordinates].map ([k,v]) ->
     idim = v
@@ -55,5 +57,8 @@ spritesmith.run src: files, (err, ret) ->
     }
     """
   fs.write-file-sync path.join(opt.outdir, opt.name + '.css'), css.join('')
-  console.log "done."
+  pngmin(ret.image)
+    .then (output) ->
+      fs.write-file-sync path.join(opt.outdir, opt.name + '.min.png'), output
+      console.log "done."
 
