@@ -10,7 +10,7 @@ opt = {
   outdir: process.argv.3 or '.'
   name: process.argv.4 or 'png-sprite'
   base: process.argv.5 or '/'
-  rule: if process.argv.6 => new RegExp(process.argv.6) else \/.png$/
+  rule: if process.argv.6 => new RegExp(process.argv.6) else /\.png$/
 }
 
 files = imagesprite.files opt.root, {rule: opt.rule}
