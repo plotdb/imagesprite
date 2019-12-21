@@ -18,6 +18,10 @@ recurse = (root, config = {}, list = [], relpath = '.') ->
   files = fs.readdir-sync path.join(root, relpath) .map -> path.join relpath, it
   for file in files => recurse root, config, list, file
 
+files = (root, config) ->
+  recurse root, config, list = []
+  return list
+
 handle-svg = (list) ->
   promise = new Promise (res, rej) ->
     sdim = {width: 0, height: 0}
@@ -90,4 +94,4 @@ build-svg = (opt = {}) ->
         fs.write-file-sync path.join(outdir, "#name.css"), ret.css
       return ret
 
-module.exports = {svg: build-svg}
+module.exports = {svg: build-svg, files: files}
