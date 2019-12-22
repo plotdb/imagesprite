@@ -3,7 +3,7 @@ mixin img(opt)
   if ctrl && ctrl.sprite
     div(
     class=`img-${opt.name || 'sprite'}`,
-    data-src=opt.src,
+    data-name=opt.src,
     )&attributes(attributes)
   else
     img(src=opt.src)&attributes(attributes)

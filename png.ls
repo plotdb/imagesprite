@@ -47,10 +47,10 @@ spritesmith.run src: files, (err, ret) ->
     bkpos-y = "#{(idim.y / sdim.height) * (sdim.height / idim.height) / ((sdim.height / idim.height) - 1) * 100}%"
 
     css.push """
-    .#{opt.name}[data-src="#k"] {
+    .#{opt.name}[data-name="#k"] {
       width: #{idim.width}px;
     }
-    .#{opt.name}[data-src="#k"]:before {
+    .#{opt.name}[data-name="#k"]:before {
       background-size: #bksize;
       background-position: #bkpos-x #bkpos-y;
       padding-top: #padding-top

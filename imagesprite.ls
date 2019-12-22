@@ -77,10 +77,10 @@ build-svg = (opt = {}) ->
         bkpos-x = "#{(idim.x / sdim.width) * (sdim.width / idim.width) / ((sdim.width / idim.width) - 1) * 100}%"
         bkpos-y = "#{(idim.y / sdim.height) * (sdim.height / idim.height) / ((sdim.height / idim.height) - 1) * 100}%"
         css.push """
-        .#name[data-src="#k"] {
+        .#name[data-name="#k"] {
           width: #{idim.width}px;
         }
-        .#name[data-src="#k"]:before {
+        .#name[data-name="#k"]:before {
           background-size: #bksize;
           background-position: #bkpos-x #bkpos-y;
           padding-top: #padding-top
