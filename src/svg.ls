@@ -1,4 +1,5 @@
-require! <[fs path jsdom svgo]>
+require! <[fs fs-extra path jsdom svgo ./util]>
+
 svgo = new svgo {full: true, plugins: [ { minifyStyles: {} } ]}
 jsdom = jsdom.JSDOM
 
@@ -9,18 +10,6 @@ get-dim = (svg) ->
   width = +("#{svg.style.width or svg.getAttribute(\width) or viewBox.2}".replace(/[^0-9]+$/,''))
   height = +("#{svg.style.height or svg.getAttribute(\height) or viewBox.3}".replace(/[^0-9]+$/,''))
   return {width, height}
-
-recurse = (root, config = {}, list = [], relpath = '.') ->
-  if !fs.stat-sync(path.join(root, relpath)).is-directory! =>
-    if !config.rule.exec(relpath) => return
-    list.push {root, path: relpath}
-    return
-  files = fs.readdir-sync path.join(root, relpath) .map -> path.join relpath, it
-  for file in files => recurse root, config, list, file
-
-files = (root, config) ->
-  recurse root, config, list = []
-  return list
 
 handle-svg = (list) ->
   promise = new Promise (res, rej) ->
@@ -47,7 +36,7 @@ build-svg = (opt = {}) ->
   name = opt.name or 'svg-sprite'
   outdir = opt.outdir
   base = opt.base
-  recurse opt.root, {rule: /\.svg$/}, (list=[])
+  util.recurse opt.root, {rule: /\.svg$/}, (list=[])
   handle-svg list
     .then ({sdim, code, coordinates}) ->
       ret = {}
@@ -90,8 +79,9 @@ build-svg = (opt = {}) ->
       ret.coord = coordinates
       ret.dimension = sdim
       if outdir =>
+        fs-extra.ensure-dir-sync outdir
         fs.write-file-sync path.join(outdir, "#name.svg"), ret.image
         fs.write-file-sync path.join(outdir, "#name.css"), ret.css
       return ret
 
-module.exports = {svg: build-svg, files: files}
+module.exports = build-svg

@@ -1,7 +1,7 @@
 {
   "author": "zbryikt",
   "name": "imagesprite",
-  "main": "imagesprite.ls",
+  "main": "src/index.ls",
   "license": "MIT",
   "description": "SVG / PNG Sprite Generator",
   "version": "0.0.1",
