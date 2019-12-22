@@ -1,0 +1,10 @@
+//- module
+mixin img(opt)
+  if ctrl && ctrl.sprite
+    div(
+    class=`img-${opt.name}`,
+    data-src=opt.src,
+    )&attributes(attributes)
+  else
+    img(src=opt.src)&attributes(attributes)
+
