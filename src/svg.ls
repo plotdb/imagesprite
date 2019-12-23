@@ -37,7 +37,7 @@ build-svg = (opt = {}) ->
   outdir = opt.outdir
   base = opt.base
   cwd = process.cwd!
-  if !opt.root.endsWith(\/) => opt.root += \/
+  if opt.root.endsWith(\/) => opt.root.replace(/\/$/,'')
   if opt.files => list = opt.files.filter(->it).map -> {root: opt.root, path: it.replace(opt.root, '')}
   else util.recurse opt.root, {rule: /\.svg$/}, (list=[])
   handle-svg list

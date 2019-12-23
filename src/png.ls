@@ -4,7 +4,7 @@ pngmin = imagemin-pngquant speed: 1, strip: true, quality: [0.7, 0.8]
 build-png = (opt) ->
   new Promise (res, rej) ->
     try
-      if !opt.root.endsWith(\/) => opt.root += \/
+      if opt.root.endsWith(\/) => opt.root.replace(/\/$/,'')
       if opt.files => files = opt.files.filter(->it)
       else
         files = util.files opt.root, {rule: opt.rule}
