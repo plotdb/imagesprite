@@ -36,13 +36,16 @@ build-svg = (opt = {}) ->
   name = opt.name or 'svg-sprite'
   outdir = opt.outdir
   base = opt.base
-  util.recurse opt.root, {rule: /\.svg$/}, (list=[])
+  cwd = process.cwd!
+  if !opt.root.endsWith(\/) => opt.root += \/
+  if opt.files => list = opt.files.filter(->it).map -> {root: opt.root, path: it.replace(opt.root, '')}
+  else util.recurse opt.root, {rule: /\.svg$/}, (list=[])
   handle-svg list
     .then ({sdim, code, coordinates}) ->
       ret = {}
       ret.image = """
       <?xml version="1.0" encoding="utf-8"?>
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="none" viewBox="0 0 #{sdim.width} #{sdim.height}" width="#{sdim.width}" height="#{sdim.height}">
       #{code.join('\n')}
       </svg>
       """

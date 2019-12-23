@@ -4,8 +4,11 @@ pngmin = imagemin-pngquant speed: 1, strip: true, quality: [0.7, 0.8]
 build-png = (opt) ->
   new Promise (res, rej) ->
     try
-      files = util.files opt.root, {rule: opt.rule}
-        .map -> path.join(it.root, it.path)
+      if !opt.root.endsWith(\/) => opt.root += \/
+      if opt.files => files = opt.files.filter(->it)
+      else
+        files = util.files opt.root, {rule: opt.rule}
+          .map -> path.join(it.root, it.path)
 
       root = (files.0 or {}).root or '.'
 
