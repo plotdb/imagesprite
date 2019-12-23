@@ -21,7 +21,7 @@ build-png = (opt) ->
           content: " ";
           width: 100%;
           display: block;
-          background-image: url(#{path.join(opt.base, opt.name + 'min.png')});
+          background-image: url(#{path.join(opt.base, opt.name + '.min.png')});
         }
         """
       ]
