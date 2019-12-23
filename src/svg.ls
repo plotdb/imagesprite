@@ -28,7 +28,7 @@ handle-svg = (list) ->
           ret = Buffer.from(it.data).toString('base64')
           code.push """<image x="#{x}" y="#{y}" width="#width" height="#height" xlink:href="data:image/svg+xml;base64,#ret"/>"""
           coordinates[file.path] = {x, y, width, height}
-          sdim.width += width
+          sdim.width += (width + 2)
           _ list
     _ list
 
