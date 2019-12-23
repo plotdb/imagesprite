@@ -10,7 +10,7 @@ build-png = (opt) ->
         files = util.files opt.root, {rule: opt.rule}
           .map -> path.join(it.root, it.path)
 
-      root = (files.0 or {}).root or '.'
+      root = opt.root or '.'
 
       css = [
         """.#{opt.name} {
@@ -21,7 +21,7 @@ build-png = (opt) ->
           content: " ";
           width: 100%;
           display: block;
-          background-image: url(#{path.join(opt.base, opt.name + '.png')});
+          background-image: url(#{path.join(opt.base, opt.name + 'min.png')});
         }
         """
       ]
@@ -34,6 +34,7 @@ build-png = (opt) ->
         [[k,v] for k,v of ret.coordinates].map ([k,v]) ->
           idim = v
           k = k.replace root, ''
+          console.log k, root
 
           padding-top = "#{idim.height / idim.width * 100}%!important"
           bksize = "#{sdim.width / idim.width * 100}%"
