@@ -34,6 +34,7 @@ build-png = (opt) ->
         [[k,v] for k,v of ret.coordinates].map ([k,v]) ->
           idim = v
           k = k.replace root, ''
+          if opt.prefix => k = path.join opt.prefix, k
 
           padding-top = "#{idim.height / idim.width * 100}%!important"
           bksize = "#{sdim.width / idim.width * 100}%"

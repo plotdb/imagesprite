@@ -38,7 +38,9 @@ build-svg = (opt = {}) ->
   base = opt.base
   cwd = process.cwd!
   if opt.root.endsWith(\/) => opt.root.replace(/\/$/,'')
-  if opt.files => list = opt.files.filter(->it).map -> {root: opt.root, path: it.replace(opt.root, '')}
+  list = if opt.files => opt.files.filter(->it).map ->
+    p = it.replace(opt.root, '')
+    {root: opt.root, path: p}
   else util.recurse opt.root, {rule: /\.svg$/}, (list=[])
   handle-svg list
     .then ({sdim, code, coordinates}) ->
@@ -68,9 +70,10 @@ build-svg = (opt = {}) ->
         bksize = "#{sdim.width / idim.width * 100}%"
         bkpos-x = "#{(idim.x / sdim.width) * (sdim.width / idim.width) / ((sdim.width / idim.width) - 1) * 100}%"
         bkpos-y = "#{(idim.y / sdim.height) * (sdim.height / idim.height) / ((sdim.height / idim.height) - 1) * 100}%"
+        if opt.prefix => k = path.join(opt.prefix, k)
         css.push """
         .#name[data-name="#k"] {
-          width: #{idim.width}px;
+          width: #{idim.width + 1}px;
         }
         .#name[data-name="#k"]:before {
           background-size: #bksize;
