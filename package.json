@@ -1,10 +1,10 @@
 {
   "author": "zbryikt",
-  "name": "imagesprite",
-  "main": "dist/index.ls",
+  "name": "@plotdb/imagesprite",
+  "main": "dist/index.js",
   "license": "MIT",
   "description": "SVG / PNG Sprite Generator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/plotdb/imagesprite",
   "repository": {
     "type": "git",
