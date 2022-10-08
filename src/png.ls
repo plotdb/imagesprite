@@ -1,4 +1,4 @@
-require! <[fs fs-extra spritesmith path imagemin-pngquant ./util]>
+require! <[fs fs-extra spritesmith path imagemin-pngquant uglifycss ./util]>
 pngmin = imagemin-pngquant speed: 1, strip: true, quality: [0.7, 0.8]
 
 build-png = (opt) ->
@@ -12,50 +12,60 @@ build-png = (opt) ->
 
       root = opt.root or '.'
 
-      css = [
-        """.#{opt.name} {
-          display: inline-block;
-          position: relative;
-        }
-        .#{opt.name}:before {
-          content: " ";
-          width: 100%;
-          display: block;
-          background-image: url(#{path.join(opt.base, opt.name + '.min.png')});
-        }
-        """
-      ]
-
       spritesmith.run src: files, (err, ret) ->
         fs-extra.ensure-dir-sync opt.outdir
-        fs.write-file-sync path.join(opt.outdir, opt.name + '.png'), ret.image
+        fs.write-file-sync path.join(opt.outdir, opt.fname + '.png'), ret.image
 
         sdim = ret.properties
-        [[k,v] for k,v of ret.coordinates].map ([k,v]) ->
-          idim = v
-          k = k.replace root, '' .replace /^\//, ''
-          kn = "#k".replace(/\.png/,'')
-          if opt.prefix => k = path.join opt.prefix, k
-
+        list = [[k,v] for k,v of ret.coordinates].map ([k,idim]) ->
+          name = k.replace(root, '').replace(/^\//, '').replace(/\.png$/,'')
+          if opt.prefix => name = path.join opt.prefix, name
           padding-top = "#{idim.height / idim.width * 100}%!important"
           bksize = "#{sdim.width / idim.width * 100}%"
-          bkpos-x = "#{(idim.x / sdim.width) * (sdim.width / idim.width) / ((sdim.width / idim.width) - 1) * 100}%"
-          bkpos-y = "#{(idim.y / sdim.height) * (sdim.height / idim.height) / ((sdim.height / idim.height) - 1) * 100}%"
+          bkpos =
+            x: "#{(idim.x / sdim.width) * (sdim.width / idim.width) / ((sdim.width / idim.width) - 1) * 100}%"
+            y: "#{(idim.y / sdim.height) * (sdim.height / idim.height) / (((sdim.height / idim.height) - 1) or 1) * 100}%"
+          return {width: idim.width, name, padding-top, bksize, bkpos}
+        same = {}
+        <[width paddingTop bksize]>.map (n) ->
+          if (ret = Array.from(new Set(list.map -> it[n]))).length => same[n] = ret.0
 
-          css.push """
-          .#{opt.name}[data-name="#kn"] {
-            width: #{idim.width}px;
+        css = [
+          """.#{opt.cname} {
+            display: inline-block;
+            position: relative;
+            #{if same.width => "width: #{same.width}px" else ''}
           }
-          .#{opt.name}[data-name="#kn"]:before {
-            background-size: #bksize;
-            background-position: #bkpos-x #bkpos-y;
-            padding-top: #padding-top
+          .#{opt.cname}:before {
+            content: " ";
+            width: 100%;
+            display: block;
+            background-image: url(#{path.join(opt.base, opt.fname + '.min.png')});
+            #{if same.padding-top => "padding-top: #{same.padding-top};" else ''}
+            #{if same.bksize => "background-size: #{same.bksize};" else ''}
           }
           """
+        ]
+
+        list.map ({name, width, padding-top, bksize, bkpos}) ->
+          if !same.width => css.push ".#{opt.cname}[n=#name] { width: #{width}px; }"
+          styles =
+            bksize: "background-size: #bksize;"
+            bkpos: "background-position: #{bkpos.x} #{bkpos.y};"
+            padding-top: "padding-top: #padding-top"
+          styles = [{k,v} for k,v of styles].filter(->!(same[it.k]?)).map(->it.v)
+          css.push """.#{opt.cname}[n=#name]:before {
+            #styles
+          }"""
+
+        css = css.join('')
+        css-min = uglifycss.processString(css, uglyComments: true)
+
         promise = if opt.outdir =>
-          fs.write-file-sync path.join(opt.outdir, opt.name + '.css'), css.join('')
+          fs.write-file-sync path.join(opt.outdir, opt.fname + '.css'), css
+          fs.write-file-sync path.join(opt.outdir, opt.fname + '.min.css'), css-min
           pngmin(ret.image) .then (output) ->
-            fs.write-file-sync path.join(opt.outdir, opt.name + '.min.png'), output
+            fs.write-file-sync path.join(opt.outdir, opt.fname + '.min.png'), output
         else Promise.resolve!
         promise.then -> res do
           coord: ret.coordinates

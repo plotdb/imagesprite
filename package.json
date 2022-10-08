@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "description": "SVG / PNG Sprite Generator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/plotdb/imagesprite",
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "npx server -r web -o true",
-    "test-build": "./dist/cli/png.js test/pngs web/static/assets/img/pack/png png-sprite /assets/img/pack/png; ./dist/cli/svg.js test/svgs web/static/assets/img/pack/svg svg-sprite /assets/img/pack/svg;"
+    "test-build": "./dist/cli/png.js test/pngs web/static/assets/img/pack/png index spr /assets/img/pack/png; ./dist/cli/svg.js test/svgs web/static/assets/img/pack/svg index brand /assets/img/pack/svg;"
   },
   "bin": {
     "imagesprite-png": "./dist/cli/png.js",
@@ -29,7 +29,8 @@
     "jsdom": "^20.0.1",
     "livescript": "^1.6.0",
     "spritesmith": "^3.4.0",
-    "svgo": "^2.8.0"
+    "svgo": "^2.8.0",
+    "uglifycss": "^0.0.29"
   },
   "devDependencies": {
     "@loadingio/bootstrap.ext": "^0.0.9",

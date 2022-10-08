@@ -11,10 +11,11 @@
   imagesprite.png({
     root: process.argv[2],
     outdir: process.argv[3] || '.',
-    name: process.argv[4] || 'png-sprite',
-    base: process.argv[5] || '/',
-    rule: process.argv[6]
-      ? new RegExp(process.argv[6])
+    fname: process.argv[4] || 'png-sprite',
+    cname: process.argv[5] || 'png-sprite',
+    base: process.argv[6] || '/',
+    rule: process.argv[7]
+      ? new RegExp(process.argv[7])
       : /\.png$/
   }).then(function(){
     return console.log("done.");

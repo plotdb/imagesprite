@@ -194,24 +194,24 @@ pug_html = pug_html + "\u003Chead\u003E";
 pug_mixins["css"]([
       {name: "bootstrap", path: "dist/css/bootstrap.min.css"},
       {name: "@loadingio/bootstrap.ext"},
-      {url: "/assets/img/pack/png/png-sprite.css"},
-      {url: "/assets/img/pack/svg/svg-sprite.css"}
+      {url: "/assets/img/pack/png/index.min.css"},
+      {url: "/assets/img/pack/svg/index.min.css"}
     ]);
-pug_html = pug_html + "\u003Cstyle type=\"text\u002Fcss\"\u003E.item{margin:1em;border:1px solid #d1d2d3;box-shadow:0 2px 4px rgba(0,0,0,0.3);border-radius:.5em}\u003C\u002Fstyle\u003E\u003C\u002Fhead\u003E\u003Cbody\u003E\u003Cdiv class=\"w-1200 rwd mx-auto my-4\"\u003E\u003Ch1\u003EPNG Sprites\u003C\u002Fh1\u003E";
+pug_html = pug_html + "\u003Cstyle type=\"text\u002Fcss\"\u003E.item{margin:1em;border:1px solid #d1d2d3;box-shadow:0 2px 4px rgba(0,0,0,0.3);border-radius:.5em;overflow:hidden}.spr{width:64px}\u003C\u002Fstyle\u003E\u003C\u002Fhead\u003E\u003Cbody\u003E\u003Cdiv class=\"w-1200 rwd mx-auto my-4\"\u003E\u003Ch1\u003EPNG Sprites\u003C\u002Fh1\u003E";
 // iterate pngs
 ;(function(){
   var $$obj = pngs;
   if ('number' == typeof $$obj.length) {
       for (var pug_index2 = 0, $$l = $$obj.length; pug_index2 < $$l; pug_index2++) {
         var file = $$obj[pug_index2];
-pug_html = pug_html + "\u003Cdiv" + (" class=\"item png-sprite\""+pug_attr("data-name", file, true, true)) + "\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "\u003Cdiv" + (" class=\"item spr\""+pug_attr("n", file, true, true)) + "\u003E\u003C\u002Fdiv\u003E";
       }
   } else {
     var $$l = 0;
     for (var pug_index2 in $$obj) {
       $$l++;
       var file = $$obj[pug_index2];
-pug_html = pug_html + "\u003Cdiv" + (" class=\"item png-sprite\""+pug_attr("data-name", file, true, true)) + "\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "\u003Cdiv" + (" class=\"item spr\""+pug_attr("n", file, true, true)) + "\u003E\u003C\u002Fdiv\u003E";
     }
   }
 }).call(this);
@@ -224,14 +224,14 @@ pug_html = pug_html + "\u003Ch1\u003ESVG Sprites\u003C\u002Fh1\u003E";
   if ('number' == typeof $$obj.length) {
       for (var pug_index3 = 0, $$l = $$obj.length; pug_index3 < $$l; pug_index3++) {
         var file = $$obj[pug_index3];
-pug_html = pug_html + "\u003Cdiv" + (" class=\"item svg-sprite\""+pug_attr("data-name", file, true, true)) + "\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "\u003Cdiv" + (" class=\"item brand\""+pug_attr("n", file, true, true)) + "\u003E\u003C\u002Fdiv\u003E";
       }
   } else {
     var $$l = 0;
     for (var pug_index3 in $$obj) {
       $$l++;
       var file = $$obj[pug_index3];
-pug_html = pug_html + "\u003Cdiv" + (" class=\"item svg-sprite\""+pug_attr("data-name", file, true, true)) + "\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "\u003Cdiv" + (" class=\"item brand\""+pug_attr("n", file, true, true)) + "\u003E\u003C\u002Fdiv\u003E";
     }
   }
 }).call(this);

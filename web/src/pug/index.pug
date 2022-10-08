@@ -6,8 +6,8 @@ html
     +css([
       {name: "bootstrap", path: "dist/css/bootstrap.min.css"},
       {name: "@loadingio/bootstrap.ext"},
-      {url: "/assets/img/pack/png/png-sprite.css"},
-      {url: "/assets/img/pack/svg/svg-sprite.css"}
+      {url: "/assets/img/pack/png/index.min.css"},
+      {url: "/assets/img/pack/svg/index.min.css"}
     ])
     style(type="text/css"): :stylus
       .item
@@ -15,12 +15,15 @@ html
         border: 1px solid #d1d2d3
         box-shadow: 0 2px 4px rgba(0,0,0,.3)
         border-radius: .5em
+        overflow: hidden
+      .spr
+        width: 64px
   body
     .w-1200.rwd.mx-auto.my-4
       h1 PNG Sprites
       each file in pngs
-        .item.png-sprite(data-name=file)
+        .item.spr(n=file)
       +nbr(3)
       h1 SVG Sprites
       each file in svgs
-        .item.svg-sprite(data-name=file)
+        .item.brand(n=file)

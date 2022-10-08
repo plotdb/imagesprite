@@ -1,4 +1,4 @@
-require! <[fs fs-extra path jsdom svgo ./util]>
+require! <[fs fs-extra path jsdom svgo uglifycss ./util]>
 
 opt = {plugins: ["minifyStyles"]}
 jsdom = jsdom.JSDOM
@@ -33,7 +33,8 @@ handle-svg = (list) ->
     _ list
 
 build-svg = (opt = {}) ->
-  name = opt.name or 'svg-sprite'
+  fname = opt.fname or 'svg-sprite'
+  cname = opt.cname or 'svg-sprite'
   outdir = opt.outdir
   base = opt.base
   cwd = process.cwd!
@@ -53,44 +54,60 @@ build-svg = (opt = {}) ->
       #{code.join('\n')}
       </svg>
       """
-      bkimg = if base and name => "background-image: url(#{path.join(base, name + '.svg')});" else ""
+      bkimg = if base and fname => "background-image: url(#{path.join(base, fname + '.svg')});" else ""
+
+      list = [[k,v] for k,v of coordinates].map ([k,idim]) ->
+        name = k.replace(opt.root, '').replace(/^\//, '').replace(/\.svg/,'')
+        if opt.prefix => name = path.join(opt.prefix, name)
+        padding-top = "#{idim.height / idim.width * 100}%!important"
+        bksize = "#{sdim.width / idim.width * 100}%"
+        bkpos =
+          x: "#{(idim.x / sdim.width) * (sdim.width / idim.width) / ((sdim.width / idim.width) - 1) * 100}%"
+          y: "#{((idim.y or 0) / sdim.height) * (sdim.height / idim.height) / (((sdim.height / idim.height) - 1) or 1) * 100}%"
+        return {width: idim.width, name, padding-top, bksize, bkpos}
+
+      same = {}
+      <[width paddingTop bksize]>.map (n) ->
+        if (ret = Array.from(new Set(list.map -> it[n]))).length => same[n] = ret.0
+
       css = [
-        """.#name {
+        """.#cname {
           display: inline-block;
           position: relative;
+          #{if same.width => "width: #{same.width}px" else ''}
         }
-        .#name:before {
+        .#cname:before {
           content: " ";
           width: 100%;
           display: block;
           #bkimg
+          #{if same.padding-top => "padding-top: #{same.padding-top};" else ''}
+          #{if same.bksize => "background-size: #{same.bksize};" else ''}
         }
         """
       ]
-      for k,idim of coordinates =>
-        padding-top = "#{idim.height / idim.width * 100}%!important"
-        bksize = "#{sdim.width / idim.width * 100}%"
-        bkpos-x = "#{(idim.x / sdim.width) * (sdim.width / idim.width) / ((sdim.width / idim.width) - 1) * 100}%"
-        bkpos-y = "#{((idim.y or 0) / sdim.height) * (sdim.height / idim.height) / (((sdim.height / idim.height) - 1) or 1) * 100}%"
-        if opt.prefix => k = path.join(opt.prefix, k)
-        kn = "#k".replace(/\.svg$/,'')
-        css.push """
-        .#name[data-name="#kn"] {
-          width: #{idim.width + 1}px;
-        }
-        .#name[data-name="#kn"]:before {
-          background-size: #bksize;
-          background-position: #bkpos-x #bkpos-y;
-          padding-top: #padding-top
-        }
-        """
+
+      list.map ({name, width, padding-top, bksize, bkpos}) ->
+        if !same.width => css.push ".#{cname}[n=#name] { width: #{width}px; }"
+        styles =
+          bksize: "background-size: #bksize;"
+          bkpos: "background-position: #{bkpos.x} #{bkpos.y};"
+          padding-top: "padding-top: #padding-top"
+        styles = [{k,v} for k,v of styles].filter(->!(same[it.k]?)).map(->it.v)
+        css.push """.#{cname}[n=#name]:before {
+          #styles
+        }"""
+
       ret.css = css.join(\\n)
       ret.coord = coordinates
       ret.dimension = sdim
       if outdir =>
+
+        css-min = uglifycss.processString(ret.css, uglyComments: true)
         fs-extra.ensure-dir-sync outdir
-        fs.write-file-sync path.join(outdir, "#name.svg"), ret.image
-        fs.write-file-sync path.join(outdir, "#name.css"), ret.css
+        fs.write-file-sync path.join(outdir, "#fname.svg"), ret.image
+        fs.write-file-sync path.join(outdir, "#fname.css"), ret.css
+        fs.write-file-sync path.join(outdir, "#fname.min.css"), css-min
       return ret
 
 module.exports = build-svg

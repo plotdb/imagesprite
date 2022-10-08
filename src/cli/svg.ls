@@ -7,8 +7,9 @@ if !process.argv.2 =>
 imagesprite.svg {
   root: process.argv.2
   outdir: process.argv.3 or '.'
-  name: process.argv.4 or 'svg-sprite'
-  base: process.argv.5 or '/'
-  rule: if process.argv.6 => new RegExp(process.argv.6) else /\.svg$/
+  fname: process.argv.4 or 'png-sprite'
+  cname: process.argv.5 or 'png-sprite'
+  base: process.argv.6 or '/'
+  rule: if process.argv.7 => new RegExp(process.argv.7) else /\.svg/
 }
   .then -> console.log "done."

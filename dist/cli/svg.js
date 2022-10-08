@@ -11,11 +11,12 @@
   imagesprite.svg({
     root: process.argv[2],
     outdir: process.argv[3] || '.',
-    name: process.argv[4] || 'svg-sprite',
-    base: process.argv[5] || '/',
-    rule: process.argv[6]
-      ? new RegExp(process.argv[6])
-      : /\.svg$/
+    fname: process.argv[4] || 'png-sprite',
+    cname: process.argv[5] || 'png-sprite',
+    base: process.argv[6] || '/',
+    rule: process.argv[7]
+      ? new RegExp(process.argv[7])
+      : /\.svg/
   }).then(function(){
     return console.log("done.");
   });
