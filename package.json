@@ -1,7 +1,7 @@
 {
   "author": "zbryikt",
   "name": "imagesprite",
-  "main": "src/index.ls",
+  "main": "dist/index.ls",
   "license": "MIT",
   "description": "SVG / PNG Sprite Generator",
   "version": "0.0.1",
@@ -10,15 +10,47 @@
     "type": "git",
     "url": "https://github.com/plotdb/imagesprite"
   },
+  "scripts": {
+    "start": "npx server -r web -o true",
+    "test-build": "./dist/cli/png.js test/pngs web/static/assets/img/pack/png png-sprite /assets/img/pack/png; ./dist/cli/svg.js test/svgs web/static/assets/img/pack/svg svg-sprite /assets/img/pack/svg;"
+  },
+  "bin": {
+    "imagesprite-png": "./dist/cli/png.js",
+    "imagesprite-svg": "./dist/cli/svg.js"
+  },
   "engines": {
     "node": ">=0.12.6",
     "npm": ">=1.2.2"
   },
   "dependencies": {
-    "LiveScript": ">=1.2.0",
     "fs-extra": "^8.1.0",
+    "imagemin": "^8.0.1",
+    "imagemin-pngquant": "^9.0.2",
     "jsdom": "^20.0.1",
+    "livescript": "^1.6.0",
     "spritesmith": "^3.4.0",
-    "svgo": "^1.3.2"
+    "svgo": "^2.8.0"
+  },
+  "devDependencies": {
+    "@loadingio/bootstrap.ext": "^0.0.9",
+    "@loadingio/debounce.js": "^1.0.1",
+    "@zbryikt/template": "^2.3.38",
+    "bootstrap": "^4.6.2",
+    "fedep": "^1.1.7",
+    "ldcover": "^3.3.0",
+    "ldview": "^1.3.0",
+    "proxise": "^1.0.1"
+  },
+  "frontendDependencies": {
+    "root": "web/static/assets/lib",
+    "modules": [
+      "jsdom",
+      "bootstrap",
+      "@loadingio/bootstrap.ext",
+      "@loadingio/debounce.js",
+      "ldcover",
+      "ldview",
+      "proxise"
+    ]
   }
 }

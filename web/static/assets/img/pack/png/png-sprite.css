@@ -1,0 +1,241 @@
+.png-sprite {
+  display: inline-block;
+  position: relative;
+}
+.png-sprite:before {
+  content: " ";
+  width: 100%;
+  display: block;
+  background-image: url(/assets/img/pack/png/png-sprite.min.png);
+}.png-sprite[data-name="ball"] {
+  width: 64px;
+}
+.png-sprite[data-name="ball"]:before {
+  background-size: 600%;
+  background-position: 0% 0%;
+  padding-top: 100%!important
+}.png-sprite[data-name="balls"] {
+  width: 64px;
+}
+.png-sprite[data-name="balls"]:before {
+  background-size: 600%;
+  background-position: 20% 0%;
+  padding-top: 100%!important
+}.png-sprite[data-name="bean-eater"] {
+  width: 64px;
+}
+.png-sprite[data-name="bean-eater"]:before {
+  background-size: 600%;
+  background-position: 0% 20%;
+  padding-top: 100%!important
+}.png-sprite[data-name="blocks"] {
+  width: 64px;
+}
+.png-sprite[data-name="blocks"]:before {
+  background-size: 600%;
+  background-position: 20% 20%;
+  padding-top: 100%!important
+}.png-sprite[data-name="cube"] {
+  width: 64px;
+}
+.png-sprite[data-name="cube"]:before {
+  background-size: 600%;
+  background-position: 40% 0%;
+  padding-top: 100%!important
+}.png-sprite[data-name="curve-bars"] {
+  width: 64px;
+}
+.png-sprite[data-name="curve-bars"]:before {
+  background-size: 600%;
+  background-position: 40% 20%;
+  padding-top: 100%!important
+}.png-sprite[data-name="default"] {
+  width: 63px;
+}
+.png-sprite[data-name="default"]:before {
+  background-size: 609.5238095238095%;
+  background-position: 39.875389408099686% 99.68847352024922%;
+  padding-top: 100%!important
+}.png-sprite[data-name="disk"] {
+  width: 64px;
+}
+.png-sprite[data-name="disk"]:before {
+  background-size: 600%;
+  background-position: 0% 40%;
+  padding-top: 100%!important
+}.png-sprite[data-name="double-ring"] {
+  width: 64px;
+}
+.png-sprite[data-name="double-ring"]:before {
+  background-size: 600%;
+  background-position: 20% 40%;
+  padding-top: 100%!important
+}.png-sprite[data-name="dual-ball"] {
+  width: 64px;
+}
+.png-sprite[data-name="dual-ball"]:before {
+  background-size: 600%;
+  background-position: 40% 40%;
+  padding-top: 100%!important
+}.png-sprite[data-name="dual-ring"] {
+  width: 64px;
+}
+.png-sprite[data-name="dual-ring"]:before {
+  background-size: 600%;
+  background-position: 60% 0%;
+  padding-top: 100%!important
+}.png-sprite[data-name="earth"] {
+  width: 64px;
+}
+.png-sprite[data-name="earth"]:before {
+  background-size: 600%;
+  background-position: 60% 20%;
+  padding-top: 100%!important
+}.png-sprite[data-name="eclipse"] {
+  width: 64px;
+}
+.png-sprite[data-name="eclipse"]:before {
+  background-size: 600%;
+  background-position: 60% 40%;
+  padding-top: 100%!important
+}.png-sprite[data-name="ellipsis"] {
+  width: 64px;
+}
+.png-sprite[data-name="ellipsis"]:before {
+  background-size: 600%;
+  background-position: 0% 60%;
+  padding-top: 100%!important
+}.png-sprite[data-name="fidget-spinner"] {
+  width: 64px;
+}
+.png-sprite[data-name="fidget-spinner"]:before {
+  background-size: 600%;
+  background-position: 20% 60%;
+  padding-top: 100%!important
+}.png-sprite[data-name="gear"] {
+  width: 64px;
+}
+.png-sprite[data-name="gear"]:before {
+  background-size: 600%;
+  background-position: 40% 60%;
+  padding-top: 100%!important
+}.png-sprite[data-name="gears"] {
+  width: 64px;
+}
+.png-sprite[data-name="gears"]:before {
+  background-size: 600%;
+  background-position: 60% 60%;
+  padding-top: 100%!important
+}.png-sprite[data-name="hourglass"] {
+  width: 64px;
+}
+.png-sprite[data-name="hourglass"]:before {
+  background-size: 600%;
+  background-position: 80% 0%;
+  padding-top: 100%!important
+}.png-sprite[data-name="infinity"] {
+  width: 64px;
+}
+.png-sprite[data-name="infinity"]:before {
+  background-size: 600%;
+  background-position: 80% 20%;
+  padding-top: 100%!important
+}.png-sprite[data-name="magnify"] {
+  width: 64px;
+}
+.png-sprite[data-name="magnify"]:before {
+  background-size: 600%;
+  background-position: 80% 40%;
+  padding-top: 100%!important
+}.png-sprite[data-name="message"] {
+  width: 64px;
+}
+.png-sprite[data-name="message"]:before {
+  background-size: 600%;
+  background-position: 80% 60%;
+  padding-top: 100%!important
+}.png-sprite[data-name="pulse"] {
+  width: 64px;
+}
+.png-sprite[data-name="pulse"]:before {
+  background-size: 600%;
+  background-position: 0% 80%;
+  padding-top: 100%!important
+}.png-sprite[data-name="radio"] {
+  width: 64px;
+}
+.png-sprite[data-name="radio"]:before {
+  background-size: 600%;
+  background-position: 20% 80%;
+  padding-top: 100%!important
+}.png-sprite[data-name="rainbow"] {
+  width: 64px;
+}
+.png-sprite[data-name="rainbow"]:before {
+  background-size: 600%;
+  background-position: 40% 80%;
+  padding-top: 100%!important
+}.png-sprite[data-name="reload"] {
+  width: 64px;
+}
+.png-sprite[data-name="reload"]:before {
+  background-size: 600%;
+  background-position: 60% 80%;
+  padding-top: 100%!important
+}.png-sprite[data-name="ring"] {
+  width: 64px;
+}
+.png-sprite[data-name="ring"]:before {
+  background-size: 600%;
+  background-position: 80% 80%;
+  padding-top: 100%!important
+}.png-sprite[data-name="ripple"] {
+  width: 64px;
+}
+.png-sprite[data-name="ripple"]:before {
+  background-size: 600%;
+  background-position: 100% 0%;
+  padding-top: 100%!important
+}.png-sprite[data-name="rolling"] {
+  width: 64px;
+}
+.png-sprite[data-name="rolling"]:before {
+  background-size: 600%;
+  background-position: 100% 20%;
+  padding-top: 100%!important
+}.png-sprite[data-name="spin"] {
+  width: 64px;
+}
+.png-sprite[data-name="spin"]:before {
+  background-size: 600%;
+  background-position: 100% 40%;
+  padding-top: 100%!important
+}.png-sprite[data-name="spinner"] {
+  width: 64px;
+}
+.png-sprite[data-name="spinner"]:before {
+  background-size: 600%;
+  background-position: 100% 60%;
+  padding-top: 100%!important
+}.png-sprite[data-name="triangles"] {
+  width: 64px;
+}
+.png-sprite[data-name="triangles"]:before {
+  background-size: 600%;
+  background-position: 100% 80%;
+  padding-top: 100%!important
+}.png-sprite[data-name="wave"] {
+  width: 64px;
+}
+.png-sprite[data-name="wave"]:before {
+  background-size: 600%;
+  background-position: 0% 100%;
+  padding-top: 100%!important
+}.png-sprite[data-name="wedges"] {
+  width: 64px;
+}
+.png-sprite[data-name="wedges"]:before {
+  background-size: 600%;
+  background-position: 20% 100%;
+  padding-top: 100%!important
+}

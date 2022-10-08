@@ -1,6 +1,6 @@
 require! <[fs fs-extra path jsdom svgo ./util]>
 
-svgo = new svgo {full: true, plugins: [ { minifyStyles: {} } ]}
+opt = {plugins: ["minifyStyles"]}
 jsdom = jsdom.JSDOM
 
 get-dim = (svg) ->
@@ -20,7 +20,7 @@ handle-svg = (list) ->
       file = list.splice(0,1).0
       if !file => return res {sdim, code, coordinates}
       data = fs.read-file-sync(path.join(file.root, file.path)).toString!
-      svgo.optimize(data)
+      Promise.resolve( svgo.optimize(data, opt) )
         .then ->
           {width, height} = get-dim(it.data)
           [x,y] = [sdim.width, 0]
@@ -38,10 +38,12 @@ build-svg = (opt = {}) ->
   base = opt.base
   cwd = process.cwd!
   if opt.root.endsWith(\/) => opt.root.replace(/\/$/,'')
-  list = if opt.files => opt.files.filter(->it).map ->
-    p = it.replace(opt.root, '')
-    {root: opt.root, path: p}
-  else util.recurse opt.root, {rule: /\.svg$/}, (list=[])
+  if opt.files =>
+    list = opt.files.filter(->it).map ->
+      p = it.replace(opt.root, '')
+      {root: opt.root, path: p}
+  else
+    util.recurse opt.root, {rule: /\.svg$/}, (list=[])
   handle-svg list
     .then ({sdim, code, coordinates}) ->
       ret = {}
@@ -69,13 +71,14 @@ build-svg = (opt = {}) ->
         padding-top = "#{idim.height / idim.width * 100}%!important"
         bksize = "#{sdim.width / idim.width * 100}%"
         bkpos-x = "#{(idim.x / sdim.width) * (sdim.width / idim.width) / ((sdim.width / idim.width) - 1) * 100}%"
-        bkpos-y = "#{(idim.y / sdim.height) * (sdim.height / idim.height) / ((sdim.height / idim.height) - 1) * 100}%"
+        bkpos-y = "#{((idim.y or 0) / sdim.height) * (sdim.height / idim.height) / (((sdim.height / idim.height) - 1) or 1) * 100}%"
         if opt.prefix => k = path.join(opt.prefix, k)
+        kn = "#k".replace(/\.svg$/,'')
         css.push """
-        .#name[data-name="#k"] {
+        .#name[data-name="#kn"] {
           width: #{idim.width + 1}px;
         }
-        .#name[data-name="#k"]:before {
+        .#name[data-name="#kn"]:before {
           background-size: #bksize;
           background-position: #bkpos-x #bkpos-y;
           padding-top: #padding-top

@@ -1,0 +1,26 @@
+doctype html
+html
+  include vars.pug
+  include @/@loadingio/bootstrap.ext/index.pug
+  head
+    +css([
+      {name: "bootstrap", path: "dist/css/bootstrap.min.css"},
+      {name: "@loadingio/bootstrap.ext"},
+      {url: "/assets/img/pack/png/png-sprite.css"},
+      {url: "/assets/img/pack/svg/svg-sprite.css"}
+    ])
+    style(type="text/css"): :stylus
+      .item
+        margin: 1em
+        border: 1px solid #d1d2d3
+        box-shadow: 0 2px 4px rgba(0,0,0,.3)
+        border-radius: .5em
+  body
+    .w-1200.rwd.mx-auto.my-4
+      h1 PNG Sprites
+      each file in pngs
+        .item.png-sprite(data-name=file)
+      +nbr(3)
+      h1 SVG Sprites
+      each file in svgs
+        .item.svg-sprite(data-name=file)

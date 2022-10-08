@@ -1,4 +1,4 @@
-require! <[fs fs-extra spritesmith path imagemin imagemin-pngquant ./util]>
+require! <[fs fs-extra spritesmith path imagemin-pngquant ./util]>
 pngmin = imagemin-pngquant speed: 1, strip: true, quality: [0.7, 0.8]
 
 build-png = (opt) ->
@@ -33,7 +33,8 @@ build-png = (opt) ->
         sdim = ret.properties
         [[k,v] for k,v of ret.coordinates].map ([k,v]) ->
           idim = v
-          k = k.replace root, ''
+          k = k.replace root, '' .replace /^\//, ''
+          kn = "#k".replace(/\.png/,'')
           if opt.prefix => k = path.join opt.prefix, k
 
           padding-top = "#{idim.height / idim.width * 100}%!important"
@@ -42,10 +43,10 @@ build-png = (opt) ->
           bkpos-y = "#{(idim.y / sdim.height) * (sdim.height / idim.height) / ((sdim.height / idim.height) - 1) * 100}%"
 
           css.push """
-          .#{opt.name}[data-name="#k"] {
+          .#{opt.name}[data-name="#kn"] {
             width: #{idim.width}px;
           }
-          .#{opt.name}[data-name="#k"]:before {
+          .#{opt.name}[data-name="#kn"]:before {
             background-size: #bksize;
             background-position: #bkpos-x #bkpos-y;
             padding-top: #padding-top

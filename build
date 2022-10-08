@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+rm -rf dist
+mkdir -p dist/cli
+./node_modules/.bin/lsc -o dist src
+
+mv dist/cli/png.js dist/cli/.png.js
+echo "#!/usr/bin/env node" > dist/cli/png.js 
+cat dist/cli/.png.js >> dist/cli/png.js
+rm dist/cli/.png.js
+chmod 755 dist/cli/png.js
+
+mv dist/cli/svg.js dist/cli/.svg.js
+echo "#!/usr/bin/env node" > dist/cli/svg.js 
+cat dist/cli/.svg.js >> dist/cli/svg.js
+rm dist/cli/.svg.js
+chmod 755 dist/cli/svg.js
