@@ -105,7 +105,6 @@
         bksize = sdim.width / idim.width * 100 + "%";
         bkposX = (idim.x / sdim.width) * (sdim.width / idim.width) / (sdim.width / idim.width - 1) * 100 + "%";
         bkposY = ((idim.y || 0) / sdim.height) * (sdim.height / idim.height) / (sdim.height / idim.height - 1 || 1) * 100 + "%";
-        console.log(idim, sdim, bkposY, ((idim.y || 0) / sdim.height) * (sdim.height / idim.height) / (sdim.height / idim.height - 1 || 1));
         if (opt.prefix) {
           k = path.join(opt.prefix, k);
         }
